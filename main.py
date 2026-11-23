@@ -12,6 +12,10 @@ LINE = (
 
 
 def main():
+    # The gate refuses anything outside 1-200 characters or blank, so fail
+    # loudly here instead of silently writing an entry that cannot be judged.
+    if not 1 <= len(LINE) <= 200 or not LINE.strip() or "\n" in LINE:
+        raise SystemExit("entry line violates the 1-200 character gate")
     out = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out, exist_ok=True)
     with open(os.path.join(out, "entry.txt"), "w", encoding="utf-8") as f:
